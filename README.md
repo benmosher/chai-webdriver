@@ -1,8 +1,8 @@
 Provides [selenium-webdriver](https://npmjs.org/package/selenium-webdriver) sugar for the [Chai](http://chaijs.com/) assertion library. Allows you to create expressive integration tests:
 
 ```javascript
-expect('.frequency-field').dom.to.contain.text('One time')
-expect('.toggle-pane').dom.to.eventually.not.be.visible()
+expect($('.frequency-field')).dom.to.contain.text('One time')
+expect($('.toggle-pane')).dom.to.eventually.not.be.visible()
 ```
 
 ## What sorts of assertions can we make?
