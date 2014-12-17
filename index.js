@@ -1,11 +1,7 @@
 var fs = require('fs');
-var seleniumWebdriver = require('selenium-webdriver');
-var sizzle = require('webdriver-sizzle-promised');
 var Q = require('q');
 
-module.exports = function(driver, timeout, interval) {
-  var $ = sizzle(driver);
-
+module.exports = function(timeout, interval) {
   timeout = timeout || 1000;
   interval = interval || Math.min(200, Math.max(0, timeout - 100));
 
@@ -24,11 +20,11 @@ module.exports = function(driver, timeout, interval) {
       return defer.promise;
     };
 
-    function assertElementExists(selector) {
-      return $(selector).fail(function(err) {
+    function assertElementExists(elementPromise) {
+      return elementPromise.fail(function(err) {
         throw new Error('element does not exist');
       });
-    };
+    }
 
     //if we have `eventually` flag, retry until result of `fn` is resolved promise, or `timeout` expires
     function retry(eventually, fn) {
@@ -169,7 +165,7 @@ module.exports = function(driver, timeout, interval) {
       }
 
       return retry(utils.flag(this, 'eventually'), function() {
-        return $.all(self._obj).then(function(els) {
+        return self._obj.then(function(els) {
           if (utils.flag(self, 'larger')) {
             self.assert(els.length >= length, 'Expected #{this} to appear more than #{exp} times, but it appeared #{act} times.', 'Expected #{this} not to appear more than #{exp} times, but it appeared #{act} times.', length, els.length);
           }

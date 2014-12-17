@@ -27,8 +27,6 @@
   },
   "dependencies": {
     "q": "~1.1.2",
-    "selenium-webdriver": "~2.44.0",
-    "webdriver-sizzle-promised": "~2.0.2"
   },
   "devDependencies": {
     "chai": "~1.10.0",
