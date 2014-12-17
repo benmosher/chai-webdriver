@@ -1,15 +1,14 @@
 {
-  "name": "chai-webdriver-promised",
+  "name": "chai-webelement-promised",
   "version": "3.0.1",
   "description": "Build more expressive integration tests with some webdriver sugar for chai.js",
   "main": "index.js",
-  "homepage": "https://b3nj4m.github.io/chai-webdriver",
   "scripts": {
     "test": "mocha -R spec spec/*.spec.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/b3nj4m/chai-webdriver.git"
+    "url": "https://github.com/benmosher/chai-webdriver.git"
   },
   "keywords": [
     "chai",
@@ -17,16 +16,17 @@
     "integration-tests",
     "chai-plugin"
   ],
-  "author": "Ben Robbins <ben.robbins@gmail.com>",
+  "author": "Ben Mosher",
   "contributors": [
-    "Max Edmands"
+    "Max Edmands",
+    "Ben Robbins <ben.robbins@gmail.com>"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/b3nj4m/chai-webdriver/issues"
+    "url": "https://github.com/benmosher/chai-webdriver/issues"
   },
   "dependencies": {
-    "q": "~1.1.2",
+    "q": "~1.1.2"
   },
   "devDependencies": {
     "chai": "~1.10.0",
