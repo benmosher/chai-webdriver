@@ -1,8 +1,8 @@
 Provides [selenium-webdriver](https://npmjs.org/package/selenium-webdriver) sugar for the [Chai](http://chaijs.com/) assertion library. Allows you to create expressive integration tests:
 
 ```javascript
-expect($('.frequency-field')).dom.to.contain.text('One time')
-expect($('.toggle-pane')).dom.to.eventually.not.be.visible()
+expect('.frequency-field').to.contain.text('One time')
+expect('.toggle-pane').to.eventually.not.be.visible()
 ```
 
 ## What sorts of assertions can we make?
@@ -15,91 +15,85 @@ expect($('div > h1'))
 expect($('a[href=http://google.com]'))
 ```
 
-Then we add the dom flag, like so:
-
-```javascript
-expect(selection).dom
-```
-
-Finally, we can add our assertion to the chain:
+Then, we can add our assertion to the chain:
 
 ### Text
 Test the text value of the dom against supplied string. Exact matches only.
 ```javascript
-expect(selection).dom.to.have.text('string')
+expect(selection).to.have.text('string')
 ```
 
 ### Text (contain)
 Test the text value of the dom against supplied string. Partial matches allowed.
 ```javascript
-expect(selection).dom.to.contain.text('string')
+expect(selection).to.contain.text('string')
 ```
 
 ### Match
-Test the text value of the dom against the regular expression.
+Test the text value of the dom against the regular expression. (note the `text` property is used as a flag)
 ```javascript
-expect(selection).dom.to.match(/regex/)
+expect(selection).to.text.match(/regex/)
 ```
 
 ### Text (regex)
 Test the text value of the dom against the regular expression. (Same as `match` above).
 ```javascript
-expect(selection).dom.to.have.text(/regex/)
+expect(selection).to.have.text(/regex/)
 ```
 
 ### Displayed
 Check whether or not the element is displayed (can be scrolled off-screen)
 ```javascript
-expect(selection).dom.to.be.displayed()
+expect(selection).to.be.displayed()
 ```
 
 ### Visible
 Check whether or not the element is visible on-screen
 ```javascript
-expect(selection).dom.to.be.visible()
+expect(selection).to.be.visible()
 ```
 
 ### Disabled
 Check whether or not the form element is disabled
 ```javascript
-expect(selection).dom.to.be.disabled()
+expect(selection).to.be.disabled()
 ```
 
 ### Count
 Test how many elements exist in the dom with the supplied selection
 ```javascript
-expect(selection).dom.to.have.count(number)
+expect(selection).to.have.count(number)
 ```
 
 ### Style
 Test the CSS style of the element (exact string match).
 ```javascript
-expect(selection).dom.to.have.style('property', 'value')
+expect(selection).to.have.style('property', 'value')
 ```
 
 ### Value
 Test the value of a form field against supplied string.
 ```javascript
-expect(selection).dom.to.have.value('string')
+expect(selection).to.have.value('string')
 ```
 
 ### HTML Class
 Tests that the element has `warning` as one of its class attributes.
 ```javascript
-expect(selection).dom.to.have.htmlClass('warning')
+expect(selection).to.have.class('warning')
 ```
 
 ### Attribute
 Test an element's attribute value. Exact matches only. By omitting `value` test simply checks for existance of attribute.
 ```javascript
-expect(selection).dom.to.have.attribute('attribute', 'value')
+expect(selection).to.have.attribute('attribute', 'value')
 ```
 
 ### Not
 You can also always add a `not` in there to negate the assertion:
 
 ```javascript
-expect(selection).dom.not.to.have.style('property', 'value')
+expect(selection).not.to.have.style('property', 'value')
 ```
 
 
@@ -109,44 +103,44 @@ Several of the assertion methods support the `larger` and `smaller` properties, 
 
 Test for a numeric value larger (>=) than 0.
 ```javascript
-expect('input[type=number]').dom.to.have.larger.value(0)
+expect('input[type=number]').to.have.larger.value(0)
 ```
 
 Test for a numeric value smaller (<=) than 0.
 ```javascript
-expect('input[type=number]').dom.to.have.smaller.value(0)
+expect('input[type=number]').to.have.smaller.value(0)
 ```
 
 Test for a numeric value not larger (<) than 0.
 ```javascript
-expect('input[type=number]').dom.not.to.have.larger.value(0)
+expect('input[type=number]').not.to.have.larger.value(0)
 ```
 
 Test for a numeric value not smaller (>) than 0.
 ```javascript
-expect('input[type=number]').dom.not.to.have.smaller.value(0)
+expect('input[type=number]').not.to.have.smaller.value(0)
 ```
 
 Other methods which support `larger` and `smaller`:
 
 Test for text with length larger (>=) than 0.
 ```javascript
-expect(selection).dom.to.have.larger.text(0)
+expect(selection).to.have.larger.text(0)
 ```
 
 Test for number of elements in `selection` larger (>=) than 0.
 ```javascript
-expect(selection).dom.to.have.larger.count(0)
+expect(selection).to.have.larger.count(0)
 ```
 
 Test for css attribute value larger (>=) than 0 (ignores units).
 ```javascript
-expect(selection).dom.to.have.larger.style('width', 0)
+expect(selection).to.have.larger.style('width', 0)
 ```
 
 Test for attribute value larger (>=) than 0.
 ```javascript
-expect(selection).dom.to.have.larger.attribute('offsetWidth', 0)
+expect(selection).to.have.larger.attribute('offsetWidth', 0)
 ```
 
 
@@ -155,7 +149,7 @@ expect(selection).dom.to.have.larger.attribute('offsetWidth', 0)
 You can also add an `eventually` to tell `chai-webdriver-promised` to poll for the desired state up to the configured timeout (see Setup below):
 
 ```javascript
-expect(selection).dom.to.eventually.have.htmlClass('warning')
+expect(selection).to.eventually.have.class('warning')
 ```
 
 
@@ -194,7 +188,7 @@ chai.describe('kitty test', function() {
     driver.get('http://github.com').then(done);
   });
   it('should not find a kitty', function() {
-    return chai.expect($('#site-container h1.heading')).dom.to.not.contain.text("I'm a kitty!");
+    return chai.expect($('#site-container h1.heading')).to.not.contain.text("I'm a kitty!");
   });
 });
 ```

@@ -65,9 +65,6 @@ module.exports = function(timeout, interval) {
       return defer.promise;
     };
 
-    chai.Assertion.addProperty('dom', function() {
-      utils.flag(this, 'dom', true);
-    });
     chai.Assertion.addProperty('eventually', function() {
       utils.flag(this, 'eventually', true);
     });
@@ -100,10 +97,6 @@ module.exports = function(timeout, interval) {
     chai.Assertion.addMethod('displayed', function() {
       var self = this;
 
-      if (!utils.flag(this, 'dom')) {
-        throw new Error('Can only test display of dom elements');
-      }
-
       var assert = function(condition) {
         self.assert(condition, 'Expected #{this} to be displayed but it is not', 'Expected #{this} to not be displayed but it is');
       };
@@ -124,10 +117,6 @@ module.exports = function(timeout, interval) {
     chai.Assertion.addMethod('visible', function() {
       var self = this;
 
-      if (!utils.flag(this, 'dom')) {
-        throw new Error('Can only test visibility of dom elements');
-      }
-
       var assert = function(condition) {
         self.assert(condition, 'Expected #{this} to be visible but it is not', 'Expected #{this} to not be visible but it is');
       };
@@ -137,7 +126,7 @@ module.exports = function(timeout, interval) {
           return el.isDisplayed().then(function(visible) {
             //selenium may say it's visible even though it's off-screen
             if (visible) {
-              return promise(driver.manage().window().getSize()).then(function(winSize) {
+              return promise(el.getDriver().manage().window().getSize()).then(function(winSize) {
                 return el.getSize().then(function(size) {
                   return el.getLocation().then(function(loc) {
                     return assert(loc.x > -size.width && loc.y > -size.height && loc.y < winSize.height && loc.x < winSize.width);
@@ -160,10 +149,6 @@ module.exports = function(timeout, interval) {
     chai.Assertion.addMethod('count', function(length) {
       var self = this;
 
-      if (!utils.flag(this, 'dom')) {
-        throw new Error('Can only test count of dom elements');
-      }
-
       return retry(utils.flag(this, 'eventually'), function() {
         return self._obj.then(function(els) {
           if (utils.flag(self, 'larger')) {
@@ -178,12 +163,8 @@ module.exports = function(timeout, interval) {
         });
       });
     });
-    chai.Assertion.addMethod('text', function(matcher) {
+    chai.Assertion.addChainableMethod('text', function(matcher) {
       var self = this;
-
-      if (!utils.flag(this, 'dom')) {
-        throw new Error('Can only test text of dom elements');
-      }
 
       return retry(utils.flag(this, 'eventually'), function() {
         return assertElementExists(self._obj).then(function(el) {
@@ -210,13 +191,9 @@ module.exports = function(timeout, interval) {
           });
         });
       });
-    });
+    }, function () { utils.flag(this, 'dom', true); });
     chai.Assertion.addMethod('style', function(property, value) {
       var self = this;
-
-      if (!utils.flag(this, 'dom')) {
-        throw new Error('Can only test style of dom elements');
-      }
 
       return retry(utils.flag(this, 'eventually'), function() {
         return assertElementExists(self._obj).then(function(el) {
@@ -241,10 +218,6 @@ module.exports = function(timeout, interval) {
     chai.Assertion.addMethod('value', function(value) {
       var self = this;
 
-      if (!utils.flag(this, 'dom')) {
-        throw new Error('Can only test value of dom elements');
-      }
-
       return retry(utils.flag(this, 'eventually'), function() {
         return assertElementExists(self._obj).then(function(el) {
           return el.getAttribute('value').then(function(actualValue) {
@@ -268,10 +241,6 @@ module.exports = function(timeout, interval) {
     chai.Assertion.addMethod('disabled', function() {
       var self = this;
 
-      if (!utils.flag(this, 'dom')) {
-        throw new Error('Can only test value of dom elements');
-      }
-
       return retry(utils.flag(this, 'eventually'), function() {
         return assertElementExists(self._obj).then(function(el) {
           return el.getAttribute('disabled').then(function(disabled) {
@@ -280,12 +249,8 @@ module.exports = function(timeout, interval) {
         });
       });
     });
-    chai.Assertion.addMethod('htmlClass', function(value) {
+    chai.Assertion.addMethod('class', function(value) {
       var self = this;
-
-      if (!utils.flag(this, 'dom')) {
-        throw new Error('Can only test value of dom elements');
-      }
 
       return retry(utils.flag(this, 'eventually'), function() {
         return assertElementExists(self._obj).then(function(el) {
@@ -297,10 +262,6 @@ module.exports = function(timeout, interval) {
     });
     return chai.Assertion.addMethod('attribute', function(attribute, value) {
       var self = this;
-
-      if (!utils.flag(this, 'dom')) {
-        throw new Error('Can only test style of dom elements');
-      }
 
       return retry(utils.flag(this, 'eventually'), function() {
         return assertElementExists(self._obj, utils.flag(this, 'eventually')).then(function(el) {
