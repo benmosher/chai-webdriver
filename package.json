@@ -31,7 +31,9 @@
   "devDependencies": {
     "chai": "~1.10.0",
     "phantomjs": "^1.9.7-1",
-    "mocha": "~2.0.1"
+    "mocha": "~2.0.1",
+    "selenium-webdriver": "~2.44.0",
+    "webdriver-sizzle-promised": "~2.0.2"
   },
   "engines": {
     "node": ">=0.10.0"
