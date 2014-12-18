@@ -94,6 +94,15 @@ module.exports = function(timeout, interval) {
         }
       };
     });
+    chai.Assertion.addProperty('present', function () {
+      var self = this;
+      var present = function (isPresent) {
+        return function() {
+          self.assert(isPresent, "Element should be presented.", "Element should not be presented.");
+        }
+      }
+      self._obj.then(present(true), present(false));
+    });
     chai.Assertion.addMethod('displayed', function() {
       var self = this;
 

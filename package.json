@@ -1,6 +1,6 @@
 {
-  "name": "chai-webelement-promised",
-  "version": "5.0.1",
+  "name": "chai-webelement",
+  "version": "5.1.0",
   "description": "Build more expressive integration tests with some webdriver sugar for chai.js",
   "main": "index.js",
   "scripts": {

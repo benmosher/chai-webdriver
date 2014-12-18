@@ -47,6 +47,13 @@ Check whether or not the element is displayed (can be scrolled off-screen)
 expect(selection).to.be.displayed()
 ```
 
+### Present
+Check whether or not the element is in the document. Absence will not throw an `Error` as it does with `displayed`.
+```javascript
+expect(selection).to.be.present
+```
+Cannot be invoked, only used as a property.
+
 ### Visible
 Check whether or not the element is visible on-screen
 ```javascript

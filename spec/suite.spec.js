@@ -102,6 +102,20 @@ describe('the basics', function() {
       });
     });
   });
+  describe('#present', function() {
+    it('verifies that an element is in the DOM', function() {
+      return expect($('.does-exist')).to.be.present;
+    });
+    it('verifies that an element is not in the DOM', function() {
+      return expect($('.does-not-exist')).not.to.be.present;
+    });
+    it('verifies that a hidden element is present', function() {
+      return expect($('.exists-but-hidden')).to.be.present;
+    });
+    it('verifies that an off-screen element is present', function() {
+      return expect($('.exists-but-off-screen')).to.be.present;
+    });
+  });
   describe('#displayed', function() {
     it('verifies that an element is displayed', function() {
       return expect($('.does-exist:text')).to.be.displayed();
