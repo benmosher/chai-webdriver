@@ -151,15 +151,6 @@ expect(selection).to.have.larger.attribute('offsetWidth', 0)
 ```
 
 
-### Eventually
-
-You can also add an `eventually` to tell `chai-webdriver-promised` to poll for the desired state up to the configured timeout (see Setup below):
-
-```javascript
-expect(selection).to.eventually.have.class('warning')
-```
-
-
 ### Everything returns a promise
 
 All of these assertions return a `Q` promise, so you can just return the promise if you're using mocha.
@@ -179,15 +170,10 @@ var driver = new sw.Builder()
 
 var $ = require('webdriver-sizzle')(driver);
 
-//optional timeout in ms to use with eventually (defaults to 1000)
-var timeout = 15000;
-//optional interval in ms to use when polling (defaults to 200)
-var interval = 100;
-
 // And then...
 var chai = require('chai');
-var chaiWebdriver = require('chai-webelement-promised');
-chai.use(chaiWebdriver(timeout, interval));
+var chaiWebdriver = require('chai-webelement');
+chai.use(chaiWebdriver);
 
 // And you're good to go!
 chai.describe('kitty test', function() {
