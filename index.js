@@ -89,7 +89,7 @@ module.exports = function (chai, utils) {
             return el.isDisplayed().then(function (visible) {
                 //selenium may say it's visible even though it's off-screen
                 if (visible) {
-                    return promise(el.getDriver().manage().window().getSize()).then(function (winSize) {
+                    return el.getDriver().manage().window().getSize().then(function (winSize) {
                         return el.getSize().then(function (size) {
                             return el.getLocation().then(function (loc) {
                                 return assert(loc.x > -size.width && loc.y > -size.height && loc.y < winSize.height && loc.x < winSize.width);
