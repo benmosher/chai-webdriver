@@ -7,7 +7,7 @@ expect($('.toggle-pane')).to.eventually.not.be.visible()
 
 ## What sorts of assertions can we make?
 
-All assertions start with a Selenium `WebElement` promise (a la [`webdriver-sizzle`](http://b3nj4m.github.io/webdriver-sizzle/)), for example:
+All assertions start with a Selenium `WebElementPromise` (a la [`webdriver-sizzle`]), for example:
 
 ```javascript
 expect($('.list'))

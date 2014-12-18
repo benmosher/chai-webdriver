@@ -2,7 +2,7 @@ var fs = require('fs');
 
 module.exports = function (chai, utils) {
     function assertElementExists(self) {
-        return self._obj.fail(function () {
+        return self._obj.thenCatch(function () {
             self.assert(utils.flag(self, 'negate'), "element does not exist.", "element does not exist");
         });
     }
