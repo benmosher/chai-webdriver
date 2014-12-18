@@ -283,7 +283,7 @@ describe('failure cases + error messages', function() {
       }, errHandler);
     });
     it('verifies that a non-existant element should not have count 1', function() {
-      return expect($('.does-not-exist')).to.have.count(1).then(function() {
+      return expect($.all('.does-not-exist')).to.have.count(1).then(function() {
         throw new Error('element does not exist, but it was found to have count 1');
       }, function(err) {
         return expect(err.toString()).to.contain("Expected '.does-not-exist' to appear 1 times, but it appeared 0 times.");
