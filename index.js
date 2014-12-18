@@ -1,24 +1,9 @@
 var fs = require('fs');
-var Q = require('q');
 
 module.exports = function (chai, utils) {
-    //convert the weird  selenium promise to a Q promise
-    function promise(selPromise) {
-        var defer = Q.defer();
-
-        selPromise.then(function () {
-            defer.resolve.apply(defer, arguments);
-        });
-        selPromise.thenCatch(function () {
-            defer.reject.apply(defer, arguments);
-        });
-
-        return defer.promise;
-    };
-
-    function assertElementExists(elementPromise) {
-        return elementPromise.fail(function (err) {
-            throw new Error('element does not exist');
+    function assertElementExists(self) {
+        return self._obj.fail(function () {
+            self.assert(utils.flag(self, 'negate'), "element does not exist.", "element does not exist");
         });
     }
 
@@ -37,7 +22,7 @@ module.exports = function (chai, utils) {
             var self = this;
 
             if (utils.flag(this, 'dom')) {
-                return assertElementExists(self._obj).then(function (el) {
+                return assertElementExists(self).then(function (el) {
                     return el.getText().then(function (text) {
                         self.assert(matcher.test(text), 'Expected element <#{this}> to match regular expression "#{exp}", but it contains "#{act}".', 'Expected element <#{this}> not to match regular expression "#{exp}"; it contains "#{act}".', matcher, text);
                     });
@@ -66,7 +51,7 @@ module.exports = function (chai, utils) {
             self.assert(condition, 'Expected #{this} to be displayed but it is not', 'Expected #{this} to not be displayed but it is');
         };
 
-        return assertElementExists(self._obj).then(function (el) {
+        return assertElementExists(self).then(function (el) {
             return el.isDisplayed().then(function (displayed) {
                 return assert(displayed);
             });
@@ -85,7 +70,7 @@ module.exports = function (chai, utils) {
             self.assert(condition, 'Expected #{this} to be visible but it is not', 'Expected #{this} to not be visible but it is');
         };
 
-        return assertElementExists(self._obj).then(function (el) {
+        return assertElementExists(self).then(function (el) {
             return el.isDisplayed().then(function (visible) {
                 //selenium may say it's visible even though it's off-screen
                 if (visible) {
@@ -126,7 +111,7 @@ module.exports = function (chai, utils) {
     chai.Assertion.addChainableMethod('text', function (matcher) {
         var self = this;
 
-        return assertElementExists(self._obj).then(function (el) {
+        return assertElementExists(self).then(function (el) {
             return el.getText().then(function (text) {
                 if (matcher instanceof RegExp) {
                     self.assert(matcher.test(text), 'Expected element <#{this}> to match regular expression "#{exp}", but it contains "#{act}".', 'Expected element <#{this}> not to match regular expression "#{exp}"; it contains "#{act}".', matcher, text);
@@ -156,7 +141,7 @@ module.exports = function (chai, utils) {
     chai.Assertion.addMethod('style', function (property, value) {
         var self = this;
 
-        return assertElementExists(self._obj).then(function (el) {
+        return assertElementExists(self).then(function (el) {
             return el.getCssValue(property).then(function (style) {
                 if (utils.flag(self, 'parseNumber')) {
                     style = parseFloat(style);
@@ -178,7 +163,7 @@ module.exports = function (chai, utils) {
     chai.Assertion.addMethod('value', function (value) {
         var self = this;
 
-        return assertElementExists(self._obj).then(function (el) {
+        return assertElementExists(self).then(function (el) {
             return el.getAttribute('value').then(function (actualValue) {
                 if (utils.flag(self, 'parseNumber')) {
                     actualValue = parseFloat(actualValue);
@@ -200,7 +185,7 @@ module.exports = function (chai, utils) {
     chai.Assertion.addMethod('disabled', function () {
         var self = this;
 
-        return assertElementExists(self._obj).then(function (el) {
+        return assertElementExists(self).then(function (el) {
             return el.getAttribute('disabled').then(function (disabled) {
                 self.assert(disabled, 'Expected #{this} to be disabled but it is not', 'Expected #{this} to not be disabled but it is');
             });
@@ -210,7 +195,7 @@ module.exports = function (chai, utils) {
     chai.Assertion.addMethod('class', function (value) {
         var self = this;
 
-        return assertElementExists(self._obj).then(function (el) {
+        return assertElementExists(self).then(function (el) {
             return el.getAttribute('class').then(function (classList) {
                 self.assert(~classList.indexOf(value), "Expected " + classList + " to contain " + value + ", but it does not.");
             });
@@ -220,7 +205,7 @@ module.exports = function (chai, utils) {
     return chai.Assertion.addMethod('attribute', function (attribute, value) {
         var self = this;
 
-        return assertElementExists(self._obj).then(function (el) {
+        return assertElementExists(self).then(function (el) {
             return el.getAttribute(attribute).then(function (actual) {
                 if (utils.flag(self, 'parseNumber')) {
                     actual = parseFloat(actual);

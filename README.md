@@ -153,8 +153,7 @@ expect(selection).to.have.larger.attribute('offsetWidth', 0)
 
 ### Everything returns a promise
 
-All of these assertions return a `Q` promise, so you can just return the promise if you're using mocha.
-
+All of these assertions return a WebDriver promise.
 
 ## Setup
 
