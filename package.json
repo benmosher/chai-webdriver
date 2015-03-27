@@ -16,10 +16,10 @@
     "integration-tests",
     "chai-plugin"
   ],
-  "author": "Ben Mosher",
+  "author": "Max Edmands",
   "contributors": [
-    "Max Edmands",
-    "Ben Robbins <ben.robbins@gmail.com>"
+    "Ben Robbins <ben.robbins@gmail.com>",
+    "Ben Mosher <me@benmosher.com>"
   ],
   "license": "MIT",
   "bugs": {
