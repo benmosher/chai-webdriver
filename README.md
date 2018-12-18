@@ -171,8 +171,8 @@ var $ = require('webdriver-sizzle')(driver);
 
 // And then...
 var chai = require('chai');
-var chaiWebdriver = require('chai-webelement');
-chai.use(chaiWebdriver);
+var chaiWebelement = require('chai-webelement');
+chai.use(chaiWebelement);
 
 // And you're good to go!
 chai.describe('kitty test', function() {
